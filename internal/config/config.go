@@ -46,23 +46,23 @@ func MustLoad() *Config {
 func MustLoadConfig() *Config {
 	path := fetchConfigPath()
 	if path == "" {
-		panic("config path is empty")
+		log.Fatalf("config path is empty")
 	}
 
 	if _, err := os.Stat(path); os.IsNotExist(err) {
-		panic("config path does not exist")
+		log.Fatalf("config path does not exist")
 	}
 
 	var cfg Config
 
 	if err := cleanenv.ReadConfig(path, &cfg); err != nil {
-		panic("failed to read config %s" + err.Error())
+		log.Fatalf("failed to read config %s", err.Error())
 	}
 
 	return nil
 }
 
-// флаг из командгой строки
+// флаг из командной строки
 func fetchConfigPath() string {
 	var path string
 
